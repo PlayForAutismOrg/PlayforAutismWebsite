@@ -13,13 +13,13 @@ The sequence prioritizes foundation and security first (visibility, structure, p
 
 ## Current Phase
 
-Client asset integration complete. All pages updated with real PFA branding, content, event recap, and sponsor logos. Next focus is deployment wiring and production credentials.
+Domain placeholders replaced with `playforautism.org`. All SEO meta, OG images, canonical URLs, sitemap, robots.txt, and Worker config updated. Next: deploy Cloudflare Worker with production Square credentials, set up Web3Forms contact key, and add store product catalog.
 
 ## Active Tasks
 
 | ID | Task | Priority | Status | Details |
 |----|------|----------|--------|---------|
-| DEP-01 | Replace placeholder domain values in `CNAME`, `worker/wrangler.toml`, `robots.txt`, `sitemap.xml` | HIGH | Ready | docs/tasks/task-dep-01-domain-and-routing.md |
+| DEP-01 | Replace placeholder domain values in `CNAME`, `worker/wrangler.toml`, `robots.txt`, `sitemap.xml` | HIGH | Completed | docs/tasks/task-dep-01-domain-and-routing.md |
 | DEP-02 | Configure Cloudflare Worker secrets for Square (`SQUARE_ACCESS_TOKEN`, `SQUARE_LOCATION_ID`) | CRITICAL | Ready | docs/tasks/task-dep-02-square-secrets.md |
 | DEP-03 | Add real product catalog data and media assets | HIGH | Ready | docs/tasks/task-dep-03-product-catalog.md |
 | DEP-04 | Add real Web3Forms key on contact page | MEDIUM | Ready | docs/tasks/task-dep-04-contact-form-key.md |
@@ -36,11 +36,12 @@ Client asset integration complete. All pages updated with real PFA branding, con
 - Content integration: real mission copy, event recap (2024 SFA golf outing), contact info.
 - Sponsor strip added to home and events pages with 8 vendor logos.
 - Events page: 2024 recap section with flyer image, event details, sponsorship tiers, and "coming soon" block.
+- Domain placeholders replaced with `playforautism.org` across all files.
+- OG image URLs, canonical links, and structured data updated with absolute production URLs.
+- Wrangler Worker config routed to `playforautism.org/api/*`.
 
 ## Quick Reference
 
-- Architecture methodology: `AI_CODEBASE_METHODOLOGY.md`
-- Static architecture playbook: `ARCHITECTURE_PLAYBOOK.md`
 - Navigation index: `docs/llms.txt`
 - Production research (your steps + official URLs): `docs/PRODUCTION_RESEARCH_GUIDE.md`
 - Worker entrypoint: `worker/index.js`

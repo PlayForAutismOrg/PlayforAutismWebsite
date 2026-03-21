@@ -3,12 +3,12 @@ main = "index.js"
 compatibility_date = "2026-03-15"
 
 [vars]
-SITE_ORIGIN = "https://yourdomain.com"
+SITE_ORIGIN = "https://playforautism.org"
 SQUARE_API_VERSION = "2025-10-16"
 
 [observability.logs]
 enabled = true
 
 [[routes]]
-pattern = "yourdomain.com/api/*"
-zone_name = "yourdomain.com"
+pattern = "playforautism.org/api/*"
+zone_name = "playforautism.org"
