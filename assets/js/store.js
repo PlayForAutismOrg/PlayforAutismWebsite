@@ -8,30 +8,29 @@
   const DONATION_ENDPOINT = API_BASE + "/api/donate";
 
   const products = [
-    {
-      id: "sensory-kit",
-      name: "Sensory Support Kit",
-      description: "A curated toolkit with sensory-friendly essentials for home or school.",
-      price: 29.0
-    },
-    {
-      id: "play-pack",
-      name: "Inclusive Play Pack",
-      description: "Adaptive activities for collaborative and independent play.",
-      price: 24.0
-    },
-    {
-      id: "awareness-tee",
-      name: "Awareness T-Shirt",
-      description: "Comfortable tee that supports autism acceptance in every community.",
-      price: 32.0
-    },
-    {
-      id: "family-journal",
-      name: "Caregiver Reflection Journal",
-      description: "Weekly prompts, routines, and resource pages for caregivers.",
-      price: 18.0
-    }
+    { id: "sfa-golf-outing", name: "Swing For Autism Golf Outing", description: "Entry to the annual Swing for Autism golf outing event.", price: 125.00, category: "events" },
+    { id: "golf-1", name: "Golf — 1 Golfer", description: "Single golfer registration.", price: 120.00, category: "golf" },
+    { id: "golf-2", name: "Golf — 2 Golfers", description: "Two golfer registration.", price: 240.00, category: "golf" },
+    { id: "golf-3", name: "Golf — 3 Golfers", description: "Three golfer registration.", price: 360.00, category: "golf" },
+    { id: "golf-4", name: "Golf — 4 Golfers", description: "Four golfer registration (full team).", price: 480.00, category: "golf" },
+    { id: "polo-s", name: "Polo — Small", description: "PFA branded polo shirt, size Small.", price: 40.00, category: "merch" },
+    { id: "polo-m", name: "Polo — Medium", description: "PFA branded polo shirt, size Medium.", price: 40.00, category: "merch" },
+    { id: "polo-l", name: "Polo — Large", description: "PFA branded polo shirt, size Large.", price: 40.00, category: "merch" },
+    { id: "polo-xl", name: "Polo — XL", description: "PFA branded polo shirt, size XL.", price: 40.00, category: "merch" },
+    { id: "polo-2xl", name: "Polo — 2XL", description: "PFA branded polo shirt, size 2XL.", price: 40.00, category: "merch" },
+    { id: "hat", name: "Hat", description: "PFA branded hat.", price: 20.00, category: "merch" },
+    { id: "golf-balls", name: "Golf Balls", description: "Sleeve of golf balls.", price: 10.00, category: "merch" },
+    { id: "mini-games-individual", name: "Mini Games — Individual", description: "Individual entry for mini games at the event.", price: 10.00, category: "events" },
+    { id: "mini-games-team", name: "Mini Games — Team", description: "Team entry for mini games at the event.", price: 40.00, category: "events" },
+    { id: "raffle-1", name: "Raffle — 1 Ticket", description: "One raffle ticket for prize drawings.", price: 10.00, category: "raffle" },
+    { id: "raffle-6", name: "Raffle — 6 Tickets", description: "Six raffle tickets for prize drawings.", price: 50.00, category: "raffle" },
+    { id: "raffle-15", name: "Raffle — 15 Tickets", description: "Fifteen raffle tickets for prize drawings.", price: 100.00, category: "raffle" },
+    { id: "5050-1", name: "50/50 — 1 Ticket", description: "One 50/50 raffle ticket.", price: 1.00, category: "raffle" },
+    { id: "5050-5", name: "50/50 — 5 Tickets", description: "Five 50/50 raffle tickets.", price: 5.00, category: "raffle" },
+    { id: "5050-10", name: "50/50 — 10 Tickets", description: "Ten 50/50 raffle tickets.", price: 10.00, category: "raffle" },
+    { id: "5050-20", name: "50/50 — 20 Tickets", description: "Twenty 50/50 raffle tickets.", price: 20.00, category: "raffle" },
+    { id: "5050-50", name: "50/50 — 50 Tickets", description: "Fifty 50/50 raffle tickets.", price: 50.00, category: "raffle" },
+    { id: "5050-100", name: "50/50 — 100 Tickets", description: "One hundred 50/50 raffle tickets.", price: 100.00, category: "raffle" }
   ];
 
   function formatMoney(amount) {
@@ -81,27 +80,45 @@
       .filter(Boolean);
   }
 
+  const categoryLabels = {
+    events: "Events & Golf",
+    golf: "Golf Packages",
+    merch: "Merchandise",
+    raffle: "Raffle & 50/50"
+  };
+
+  const categoryOrder = ["events", "golf", "merch", "raffle"];
+
   function renderProducts() {
     const grid = document.getElementById("productGrid");
     if (!grid) {
       return;
     }
 
-    grid.innerHTML = products
-      .map(
-        (product) => `
-          <article class="card product-card">
-            <div class="product-thumb" role="img" aria-label="${product.name} image placeholder"></div>
-            <h3>${product.name}</h3>
-            <p class="meta">${product.description}</p>
-            <div class="price">${formatMoney(product.price)}</div>
-            <button class="btn ripple" type="button" data-add-product="${product.id}">
-              Add to Cart
-            </button>
-          </article>
-        `
-      )
-      .join("");
+    let html = "";
+    categoryOrder.forEach((cat) => {
+      const items = products.filter((p) => p.category === cat);
+      if (!items.length) return;
+      html += `<h3 class="store-category-heading">${categoryLabels[cat]}</h3>`;
+      html += `<div class="store-grid">`;
+      html += items
+        .map(
+          (product) => `
+            <article class="card product-card">
+              <h4>${product.name}</h4>
+              <p class="meta">${product.description}</p>
+              <div class="price">${formatMoney(product.price)}</div>
+              <button class="btn ripple" type="button" data-add-product="${product.id}">
+                Add to Cart
+              </button>
+            </article>
+          `
+        )
+        .join("");
+      html += `</div>`;
+    });
+
+    grid.innerHTML = html;
 
     grid.querySelectorAll("[data-add-product]").forEach((button) => {
       button.addEventListener("click", () => {
