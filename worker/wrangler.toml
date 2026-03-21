@@ -1,6 +1,7 @@
 name = "play-for-autism-checkout"
 main = "index.js"
 compatibility_date = "2026-03-15"
+workers_dev = true
 
 [vars]
 SITE_ORIGIN = "https://playforautism.org"
