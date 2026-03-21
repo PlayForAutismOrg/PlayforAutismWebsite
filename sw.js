@@ -1,4 +1,4 @@
-const CACHE_NAME = "play-for-autism-v12";
+const CACHE_NAME = "play-for-autism-v14";
 const URLS_TO_CACHE = [
   "/",
   "/index.html",
@@ -12,6 +12,8 @@ const URLS_TO_CACHE = [
   "/assets/css/style.css",
   "/assets/js/main.js",
   "/assets/js/store.js",
+  "/assets/fonts/lexend-latin.woff2",
+  "/assets/fonts/source-sans-3-latin.woff2",
   "/favicon.svg",
   "/manifest.json"
 ];
