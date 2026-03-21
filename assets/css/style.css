@@ -597,7 +597,7 @@ section {
 }
 
 .currency-prefix {
-  padding: 0.75rem 0 0.75rem 1rem;
+  padding: 0.75rem 0.125rem 0.75rem 1rem;
   font-family: "Lexend", sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
@@ -608,7 +608,7 @@ section {
   flex: 1;
   border: none;
   background: transparent;
-  padding: 0.75rem 1rem 0.75rem 0.25rem;
+  padding: 0.75rem 1rem 0.75rem 0;
   font-family: "Lexend", sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
