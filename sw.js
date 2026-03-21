@@ -1,4 +1,4 @@
-const CACHE_NAME = "play-for-autism-v8";
+const CACHE_NAME = "play-for-autism-v9";
 const URLS_TO_CACHE = [
   "/",
   "/index.html",

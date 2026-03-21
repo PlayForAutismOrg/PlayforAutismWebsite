@@ -139,6 +139,22 @@
     requestAnimationFrame(step);
   }
 
+  function setupBackToTop() {
+    const btn = document.createElement("button");
+    btn.className = "back-to-top";
+    btn.setAttribute("aria-label", "Back to top");
+    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 13 10 8 5 13"/></svg>';
+    document.body.appendChild(btn);
+
+    function toggle() {
+      btn.classList.toggle("visible", window.scrollY > 400);
+    }
+
+    window.addEventListener("scroll", toggle, { passive: true });
+    btn.addEventListener("click", () => window.scrollTo({ top: 0 }));
+    toggle();
+  }
+
   window.addEventListener("scroll", handleHeaderVisibility, { passive: true });
 
   setupRevealObserver();
@@ -146,5 +162,6 @@
   setActiveNavLink();
   setupMobileNav();
   setupCounters();
+  setupBackToTop();
   registerServiceWorker();
 })();
