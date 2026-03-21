@@ -1169,6 +1169,27 @@ textarea {
 .footer-bottom {
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.footer-credit {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.01em;
+}
+
+.footer-credit a {
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.footer-credit a:hover {
+  color: var(--brand);
 }
 
 .site-footer a {
