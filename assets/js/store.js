@@ -337,6 +337,22 @@
     renderCart();
   }
 
+  function updateMobileCartBar(detailedItems, total) {
+    const bar = document.getElementById("mobileCartBar");
+    if (!bar) return;
+    const countEl = document.getElementById("mcbCount");
+    const totalEl = document.getElementById("mcbTotal");
+
+    const itemCount = detailedItems.reduce((sum, i) => sum + i.quantity, 0);
+    const hasItems = itemCount > 0;
+
+    bar.classList.toggle("visible", hasItems);
+    bar.setAttribute("aria-hidden", String(!hasItems));
+
+    if (countEl) countEl.textContent = itemCount === 1 ? "1 item" : `${itemCount} items`;
+    if (totalEl) totalEl.textContent = formatMoney(total);
+  }
+
   function renderCart() {
     const cartList = document.getElementById("cartList");
     const cartTotal = document.getElementById("cartTotal");
@@ -346,11 +362,14 @@
 
     const detailedItems = cartToDetailedItems();
     const isEmpty = detailedItems.length === 0;
+    const total = detailedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     cartEmptyMessage.style.display = isEmpty ? "block" : "none";
     checkoutButton.disabled = isEmpty;
     checkoutButton.style.opacity = isEmpty ? "0.6" : "1";
     checkoutButton.style.cursor = isEmpty ? "not-allowed" : "pointer";
+
+    updateMobileCartBar(detailedItems, total);
 
     if (isEmpty) {
       cartList.innerHTML = "";
@@ -374,7 +393,6 @@
       )
       .join("");
 
-    const total = detailedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     cartTotal.textContent = formatMoney(total);
 
     cartList.querySelectorAll("[data-remove-item]").forEach((button) => {
@@ -486,6 +504,16 @@
     });
   }
 
+  function setupMobileCartBar() {
+    const btn = document.getElementById("mcbAction");
+    const cartShell = document.querySelector(".cart-shell");
+    if (!btn || !cartShell) return;
+
+    btn.addEventListener("click", () => {
+      cartShell.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
   async function init() {
     const hash = location.hash.replace("#", "");
     if (hash && categoryOrder.includes(hash)) {
@@ -497,6 +525,7 @@
     renderCart();
     setupStoreCheckout();
     setupDonations();
+    setupMobileCartBar();
 
     window.addEventListener("hashchange", () => {
       const h = location.hash.replace("#", "");
