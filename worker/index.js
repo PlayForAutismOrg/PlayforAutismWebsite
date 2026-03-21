@@ -1,8 +1,7 @@
-function getSquareApiBase(env) {
-  const host = env.SQUARE_ENVIRONMENT === "sandbox"
+function getSquareHost(env) {
+  return env.SQUARE_ENVIRONMENT === "sandbox"
     ? "connect.squareupsandbox.com"
     : "connect.squareup.com";
-  return `https://${host}/v2/online-checkout/payment-links`;
 }
 
 function jsonResponse(body, status = 200, origin = "*") {
@@ -25,26 +24,82 @@ function getOrigin(request, env) {
   return reqOrigin === env.SITE_ORIGIN ? reqOrigin : env.SITE_ORIGIN || "*";
 }
 
+function squareHeaders(env) {
+  return {
+    Authorization: `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+    "Content-Type": "application/json",
+    "Square-Version": env.SQUARE_API_VERSION || "2025-10-16"
+  };
+}
+
 function toMoneyAmount(value) {
   return Math.round(Number(value) * 100);
 }
 
-function buildLineItem(name, quantity, amountCents) {
+function buildAdHocLineItem(name, quantity, amountCents) {
   return {
     quantity: String(quantity),
     name,
-    base_price_money: {
-      amount: amountCents,
-      currency: "USD"
-    }
+    base_price_money: { amount: amountCents, currency: "USD" }
   };
 }
 
-async function createSquarePaymentLink(env, lineItems, redirectUrl) {
-  const payload = {
+function buildCatalogLineItem(variationId, quantity) {
+  return {
+    quantity: String(quantity),
+    catalog_object_id: variationId
+  };
+}
+
+async function handleInventory(env, payload, origin) {
+  const ids = Array.isArray(payload.catalogObjectIds) ? payload.catalogObjectIds : [];
+  if (ids.length === 0) {
+    return jsonResponse({ counts: {} }, 200, origin);
+  }
+
+  const res = await fetch(`https://${getSquareHost(env)}/v2/inventory/batch-retrieve-counts`, {
+    method: "POST",
+    headers: squareHeaders(env),
+    body: JSON.stringify({
+      catalog_object_ids: ids,
+      location_ids: [env.SQUARE_LOCATION_ID]
+    })
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data?.errors?.[0]?.detail || "Inventory API error");
+  }
+
+  const counts = {};
+  for (const c of data.counts || []) {
+    const qty = parseFloat(c.quantity);
+    counts[c.catalog_object_id] = {
+      quantity: qty,
+      state: c.state
+    };
+  }
+  return jsonResponse({ counts }, 200, origin);
+}
+
+async function handleCheckout(env, payload, origin) {
+  const items = Array.isArray(payload.items) ? payload.items : [];
+  if (items.length === 0) {
+    return jsonResponse({ error: "Cart items are required" }, 400, origin);
+  }
+
+  const lineItems = items.map((item) => {
+    const qty = Math.max(1, Number(item.quantity || 1));
+    if (item.variationId) {
+      return buildCatalogLineItem(item.variationId, qty);
+    }
+    return buildAdHocLineItem(item.name || "Product", qty, toMoneyAmount(item.price || 0));
+  });
+
+  const body = {
     idempotency_key: crypto.randomUUID(),
     checkout_options: {
-      redirect_url: redirectUrl
+      redirect_url: payload.successUrl || `${env.SITE_ORIGIN}/confirmation.html`
     },
     order: {
       location_id: env.SQUARE_LOCATION_ID,
@@ -52,22 +107,47 @@ async function createSquarePaymentLink(env, lineItems, redirectUrl) {
     }
   };
 
-  const res = await fetch(getSquareApiBase(env), {
+  const res = await fetch(`https://${getSquareHost(env)}/v2/online-checkout/payment-links`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
-      "Content-Type": "application/json",
-      "Square-Version": env.SQUARE_API_VERSION || "2025-10-16"
-    },
-    body: JSON.stringify(payload)
+    headers: squareHeaders(env),
+    body: JSON.stringify(body)
   });
 
   const data = await res.json();
   if (!res.ok) {
     throw new Error(data?.errors?.[0]?.detail || "Square API error");
   }
+  return jsonResponse({ checkoutUrl: data.payment_link?.url }, 200, origin);
+}
 
-  return data.payment_link?.url;
+async function handleDonate(env, payload, origin) {
+  const amount = Number(payload.amount || 0);
+  if (!amount || amount <= 0) {
+    return jsonResponse({ error: "Donation amount is required" }, 400, origin);
+  }
+
+  const body = {
+    idempotency_key: crypto.randomUUID(),
+    checkout_options: {
+      redirect_url: payload.successUrl || `${env.SITE_ORIGIN}/confirmation.html`
+    },
+    order: {
+      location_id: env.SQUARE_LOCATION_ID,
+      line_items: [buildAdHocLineItem("Donation", 1, toMoneyAmount(amount))]
+    }
+  };
+
+  const res = await fetch(`https://${getSquareHost(env)}/v2/online-checkout/payment-links`, {
+    method: "POST",
+    headers: squareHeaders(env),
+    body: JSON.stringify(body)
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data?.errors?.[0]?.detail || "Square API error");
+  }
+  return jsonResponse({ checkoutUrl: data.payment_link?.url }, 200, origin);
 }
 
 export default {
@@ -89,29 +169,17 @@ export default {
 
     try {
       const payload = await request.json();
-      let lineItems = [];
 
-      if (url.pathname === "/api/checkout") {
-        const items = Array.isArray(payload.items) ? payload.items : [];
-        if (items.length === 0) {
-          return jsonResponse({ error: "Cart items are required" }, 400, origin);
-        }
-        lineItems = items.map((item) =>
-          buildLineItem(item.name || "Product", Math.max(1, Number(item.quantity || 1)), toMoneyAmount(item.price || 0))
-        );
-      } else if (url.pathname === "/api/donate") {
-        const amount = Number(payload.amount || 0);
-        if (!amount || amount <= 0) {
-          return jsonResponse({ error: "Donation amount is required" }, 400, origin);
-        }
-        lineItems = [buildLineItem("Donation", 1, toMoneyAmount(amount))];
-      } else {
-        return jsonResponse({ error: "Route not found" }, 404, origin);
+      switch (url.pathname) {
+        case "/api/inventory":
+          return await handleInventory(env, payload, origin);
+        case "/api/checkout":
+          return await handleCheckout(env, payload, origin);
+        case "/api/donate":
+          return await handleDonate(env, payload, origin);
+        default:
+          return jsonResponse({ error: "Route not found" }, 404, origin);
       }
-
-      const successUrl = payload.successUrl || `${env.SITE_ORIGIN}/confirmation.html`;
-      const checkoutUrl = await createSquarePaymentLink(env, lineItems, successUrl);
-      return jsonResponse({ checkoutUrl }, 200, origin);
     } catch (error) {
       return jsonResponse({ error: error.message || "Unexpected server error" }, 500, origin);
     }

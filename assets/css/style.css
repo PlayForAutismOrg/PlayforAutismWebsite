@@ -437,6 +437,7 @@ section {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  position: relative;
 }
 
 .product-card h4 {
@@ -448,6 +449,61 @@ section {
 .price {
   color: var(--accent);
   font-weight: 700;
+}
+
+/* ── Stock badges ── */
+
+.stock-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.stock-available {
+  background: rgba(33, 201, 162, 0.12);
+  color: var(--brand);
+}
+
+.stock-in {
+  background: rgba(33, 201, 162, 0.12);
+  color: var(--brand);
+}
+
+.stock-low {
+  background: rgba(255, 171, 0, 0.14);
+  color: #ffab00;
+}
+
+.stock-out {
+  background: rgba(255, 82, 82, 0.14);
+  color: #ff5252;
+}
+
+/* ── Out-of-stock card state ── */
+
+.product-out-of-stock {
+  opacity: 0.7;
+}
+
+.product-out-of-stock .price {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.btn-preorder {
+  background: transparent;
+  border: 1.5px solid var(--brand);
+  color: var(--brand);
+}
+
+.btn-preorder:hover {
+  background: var(--brand);
+  color: var(--bg);
 }
 
 .cart-shell {

@@ -6,31 +6,34 @@
     : "https://api.playforautism.org";
   const CHECKOUT_ENDPOINT = API_BASE + "/api/checkout";
   const DONATION_ENDPOINT = API_BASE + "/api/donate";
+  const INVENTORY_ENDPOINT = API_BASE + "/api/inventory";
+
+  let inventoryCounts = {};
 
   const products = [
-    { id: "sfa-golf-outing", name: "Swing For Autism Golf Outing", description: "Entry to the annual Swing for Autism golf outing event.", price: 125.00, category: "events" },
-    { id: "golf-1", name: "Golf — 1 Golfer", description: "Single golfer registration.", price: 120.00, category: "golf" },
-    { id: "golf-2", name: "Golf — 2 Golfers", description: "Two golfer registration.", price: 240.00, category: "golf" },
-    { id: "golf-3", name: "Golf — 3 Golfers", description: "Three golfer registration.", price: 360.00, category: "golf" },
-    { id: "golf-4", name: "Golf — 4 Golfers", description: "Four golfer registration (full team).", price: 480.00, category: "golf" },
-    { id: "polo-s", name: "Polo — Small", description: "PFA branded polo shirt, size Small.", price: 40.00, category: "merch" },
-    { id: "polo-m", name: "Polo — Medium", description: "PFA branded polo shirt, size Medium.", price: 40.00, category: "merch" },
-    { id: "polo-l", name: "Polo — Large", description: "PFA branded polo shirt, size Large.", price: 40.00, category: "merch" },
-    { id: "polo-xl", name: "Polo — XL", description: "PFA branded polo shirt, size XL.", price: 40.00, category: "merch" },
-    { id: "polo-2xl", name: "Polo — 2XL", description: "PFA branded polo shirt, size 2XL.", price: 40.00, category: "merch" },
-    { id: "hat", name: "Hat", description: "PFA branded hat.", price: 20.00, category: "merch" },
-    { id: "golf-balls", name: "Golf Balls", description: "Sleeve of golf balls.", price: 10.00, category: "merch" },
-    { id: "mini-games-individual", name: "Mini Games — Individual", description: "Individual entry for mini games at the event.", price: 10.00, category: "events" },
-    { id: "mini-games-team", name: "Mini Games — Team", description: "Team entry for mini games at the event.", price: 40.00, category: "events" },
-    { id: "raffle-1", name: "Raffle — 1 Ticket", description: "One raffle ticket for prize drawings.", price: 10.00, category: "raffle" },
-    { id: "raffle-6", name: "Raffle — 6 Tickets", description: "Six raffle tickets for prize drawings.", price: 50.00, category: "raffle" },
-    { id: "raffle-15", name: "Raffle — 15 Tickets", description: "Fifteen raffle tickets for prize drawings.", price: 100.00, category: "raffle" },
-    { id: "5050-1", name: "50/50 — 1 Ticket", description: "One 50/50 raffle ticket.", price: 1.00, category: "raffle" },
-    { id: "5050-5", name: "50/50 — 5 Tickets", description: "Five 50/50 raffle tickets.", price: 5.00, category: "raffle" },
-    { id: "5050-10", name: "50/50 — 10 Tickets", description: "Ten 50/50 raffle tickets.", price: 10.00, category: "raffle" },
-    { id: "5050-20", name: "50/50 — 20 Tickets", description: "Twenty 50/50 raffle tickets.", price: 20.00, category: "raffle" },
-    { id: "5050-50", name: "50/50 — 50 Tickets", description: "Fifty 50/50 raffle tickets.", price: 50.00, category: "raffle" },
-    { id: "5050-100", name: "50/50 — 100 Tickets", description: "One hundred 50/50 raffle tickets.", price: 100.00, category: "raffle" }
+    { id: "sfa-golf-outing", name: "Swing For Autism Golf Outing", description: "Entry to the annual Swing for Autism golf outing event.", price: 125.00, category: "events", variationId: "YY74RYJEM4YKD6SSZVS4LIPQ" },
+    { id: "golf-1", name: "Golf — 1 Golfer", description: "Single golfer registration.", price: 120.00, category: "golf", variationId: "Q3FZTGOVKZ2ZUSODMPGVPHJA" },
+    { id: "golf-2", name: "Golf — 2 Golfers", description: "Two golfer registration.", price: 240.00, category: "golf", variationId: "Z3TK62DAIAKNL4M4OQCRRY6A" },
+    { id: "golf-3", name: "Golf — 3 Golfers", description: "Three golfer registration.", price: 360.00, category: "golf", variationId: "45NYPEKO4YJOF6N7IMAX3E6O" },
+    { id: "golf-4", name: "Golf — 4 Golfers", description: "Four golfer registration (full team).", price: 480.00, category: "golf", variationId: "RPY4DS6DI37VPWNHDZCJBLL3" },
+    { id: "polo-s", name: "Polo — Small", description: "PFA branded polo shirt, size Small.", price: 40.00, category: "merch", variationId: "D4EP5YYGLCAULCZCQNXMWZIS" },
+    { id: "polo-m", name: "Polo — Medium", description: "PFA branded polo shirt, size Medium.", price: 40.00, category: "merch", variationId: "RU4F3D6QRLPME52I7UKHJ5JZ" },
+    { id: "polo-l", name: "Polo — Large", description: "PFA branded polo shirt, size Large.", price: 40.00, category: "merch", variationId: "XBB5GPV2N4LYICXUAVL45GLV" },
+    { id: "polo-xl", name: "Polo — XL", description: "PFA branded polo shirt, size XL.", price: 40.00, category: "merch", variationId: "O5GHFFAQ5WYJFBLWYTJ3STMU" },
+    { id: "polo-2xl", name: "Polo — 2XL", description: "PFA branded polo shirt, size 2XL.", price: 40.00, category: "merch", variationId: "DDMGH6TR2OGWLTKE4QOG22UY" },
+    { id: "hat", name: "Hat", description: "PFA branded hat.", price: 20.00, category: "merch", variationId: "YG3KXSCSI4DZKYACHEPD4H4P" },
+    { id: "golf-balls", name: "Golf Balls", description: "Sleeve of golf balls.", price: 10.00, category: "merch", variationId: "ICR55BOSHY3T43QGP7FKNQU3" },
+    { id: "mini-games-individual", name: "Mini Games — Individual", description: "Individual entry for mini games at the event.", price: 10.00, category: "events", variationId: "B55X26M2VR2J2I3RJX5Y6BVH" },
+    { id: "mini-games-team", name: "Mini Games — Team", description: "Team entry for mini games at the event.", price: 40.00, category: "events", variationId: "WCPXW2K4JG7JGTZ2VR7ML7QG" },
+    { id: "raffle-1", name: "Raffle — 1 Ticket", description: "One raffle ticket for prize drawings.", price: 10.00, category: "raffle", variationId: "B4SY6ZWXFCYEDGJOZSZXHDEX" },
+    { id: "raffle-6", name: "Raffle — 6 Tickets", description: "Six raffle tickets for prize drawings.", price: 50.00, category: "raffle", variationId: "UP6NU2X76TVH53IBWX52ZHS6" },
+    { id: "raffle-15", name: "Raffle — 15 Tickets", description: "Fifteen raffle tickets for prize drawings.", price: 100.00, category: "raffle", variationId: "Z2LPVDSHRSCNBPF42SWPJKUH" },
+    { id: "5050-1", name: "50/50 — 1 Ticket", description: "One 50/50 raffle ticket.", price: 1.00, category: "raffle", variationId: "QE7ETOCXQS2MDWEYOCXIKZVF" },
+    { id: "5050-5", name: "50/50 — 5 Tickets", description: "Five 50/50 raffle tickets.", price: 5.00, category: "raffle", variationId: "DRQMRVOADU77WT23TP2UWSCQ" },
+    { id: "5050-10", name: "50/50 — 10 Tickets", description: "Ten 50/50 raffle tickets.", price: 10.00, category: "raffle", variationId: "A6SVJSBERTSX7VRE4SX72QJ5" },
+    { id: "5050-20", name: "50/50 — 20 Tickets", description: "Twenty 50/50 raffle tickets.", price: 20.00, category: "raffle", variationId: "AY2QICMI6IGVJHMDDH7WPSTI" },
+    { id: "5050-50", name: "50/50 — 50 Tickets", description: "Fifty 50/50 raffle tickets.", price: 50.00, category: "raffle", variationId: "QEFCSV4YNJWIFCODBGZOH6QR" },
+    { id: "5050-100", name: "50/50 — 100 Tickets", description: "One hundred 50/50 raffle tickets.", price: 100.00, category: "raffle", variationId: "KRDAMWT3M537JWVSCGVRC7XT" }
   ];
 
   function formatMoney(amount) {
@@ -89,6 +92,37 @@
 
   const categoryOrder = ["events", "golf", "merch", "raffle"];
 
+  async function fetchInventory() {
+    const ids = products.map((p) => p.variationId).filter(Boolean);
+    try {
+      const res = await fetch(INVENTORY_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ catalogObjectIds: ids })
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      inventoryCounts = data.counts || {};
+    } catch {
+      // Inventory unavailable — render all as available
+    }
+  }
+
+  function getStockInfo(product) {
+    const inv = inventoryCounts[product.variationId];
+    if (!inv) {
+      return { tracked: false, qty: null, label: "Available", status: "available" };
+    }
+    const qty = inv.quantity;
+    if (qty <= 0) {
+      return { tracked: true, qty, label: "Out of Stock", status: "out" };
+    }
+    if (qty <= 5) {
+      return { tracked: true, qty, label: `Only ${qty} left`, status: "low" };
+    }
+    return { tracked: true, qty, label: "In Stock", status: "in" };
+  }
+
   function renderProducts() {
     const grid = document.getElementById("productGrid");
     if (!grid) {
@@ -102,18 +136,24 @@
       html += `<h3 class="store-category-heading">${categoryLabels[cat]}</h3>`;
       html += `<div class="store-grid">`;
       html += items
-        .map(
-          (product) => `
-            <article class="card product-card">
+        .map((product) => {
+          const stock = getStockInfo(product);
+          const isOut = stock.status === "out";
+          const badgeClass = `stock-badge stock-${stock.status}`;
+          const btnLabel = isOut ? "Pre-order" : "Add to Cart";
+          const btnClass = isOut ? "btn ripple btn-preorder" : "btn ripple";
+          return `
+            <article class="card product-card${isOut ? " product-out-of-stock" : ""}">
+              <span class="${badgeClass}">${stock.label}</span>
               <h4>${product.name}</h4>
               <p class="meta">${product.description}</p>
               <div class="price">${formatMoney(product.price)}</div>
-              <button class="btn ripple" type="button" data-add-product="${product.id}">
-                Add to Cart
+              <button class="${btnClass}" type="button" data-add-product="${product.id}">
+                ${btnLabel}
               </button>
             </article>
-          `
-        )
+          `;
+        })
         .join("");
       html += `</div>`;
     });
@@ -204,10 +244,10 @@
 
     checkoutButton.addEventListener("click", async () => {
       const items = cartToDetailedItems().map((item) => ({
-        id: item.id,
         name: item.name,
         quantity: item.quantity,
-        price: item.price
+        price: item.price,
+        variationId: item.variationId
       }));
 
       if (items.length === 0) {
@@ -290,8 +330,13 @@
     });
   }
 
-  renderProducts();
-  renderCart();
-  setupStoreCheckout();
-  setupDonations();
+  async function init() {
+    await fetchInventory();
+    renderProducts();
+    renderCart();
+    setupStoreCheckout();
+    setupDonations();
+  }
+
+  init();
 })();
