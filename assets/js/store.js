@@ -3,7 +3,7 @@
   const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
   const API_BASE = IS_LOCAL
     ? "http://localhost:8787"
-    : "https://play-for-autism-checkout.playforautism.workers.dev";
+    : "https://api.playforautism.org";
   const CHECKOUT_ENDPOINT = API_BASE + "/api/checkout";
   const DONATION_ENDPOINT = API_BASE + "/api/donate";
 

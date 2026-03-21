@@ -1,7 +1,7 @@
 name = "play-for-autism-checkout"
 main = "index.js"
 compatibility_date = "2026-03-15"
-workers_dev = true
+workers_dev = false
 
 [vars]
 SITE_ORIGIN = "https://playforautism.org"
@@ -11,5 +11,5 @@ SQUARE_API_VERSION = "2025-10-16"
 enabled = true
 
 [[routes]]
-pattern = "playforautism.org/api/*"
+pattern = "api.playforautism.org/api/*"
 zone_name = "playforautism.org"
