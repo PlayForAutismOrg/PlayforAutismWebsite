@@ -1,0 +1,57 @@
+# AI Navigation Index - Play for Autism Website
+
+## Core Architecture
+- Methodology and agent constraints: `AI_CODEBASE_METHODOLOGY.md`
+- Static website stack and deployment model: `ARCHITECTURE_PLAYBOOK.md`
+- Active plan state: `TODO.md`
+- Human-facing production research (URL-backed): `docs/PRODUCTION_RESEARCH_GUIDE.md`
+
+## Pages
+- Home: `index.html`
+- About/Mission: `about.html`
+- Store: `store.html`
+- Events: `events.html`
+- Donate: `donate.html`
+- Contact: `contact.html`
+- Post-checkout confirmation: `confirmation.html`
+- Not found page: `404.html`
+
+## Frontend Assets
+- Global styling: `assets/css/style.css`
+- Shared interactions and PWA registration: `assets/js/main.js`
+- Store and donation client logic: `assets/js/store.js`
+- Favicon: `favicon.svg`
+
+## Brand and Image Assets
+- Primary logo (color): `assets/images/pfa-logo.png`
+- Logo black-and-white: `assets/images/pfa-logo-bw.png`
+- Logo icon variant: `assets/images/pfa-logo-icon.png`
+- 2024 event flyer: `assets/images/sfa-2024-flyer.png`
+- 2024 sponsorship flyer: `assets/images/sfa-2024-sponsorship.png`
+- 2024 registration form: `assets/images/sfa-2024-registration.png`
+- OG images: `assets/images/og-*.png`
+- Sponsor logos: `assets/images/sponsors/*.{png,jpg,jpeg}`
+
+## Payments (Square Redirect Architecture)
+- Worker API integration: `worker/index.js`
+- Worker routing and env vars: `worker/wrangler.toml`
+- Local Worker env template (copy to `.dev.vars`, do not commit): `worker/.dev.vars.example`
+- Store checkout endpoint: `POST /api/checkout`
+- Donation checkout endpoint: `POST /api/donate`
+
+## PWA + SEO
+- Web app manifest: `manifest.json`
+- Service worker cache logic: `sw.js`
+- Crawl control: `robots.txt`
+- Sitemap: `sitemap.xml`
+
+## Testing
+- Playwright config: `playwright.config.js`
+- E2E tests: `tests/e2e/`
+
+## Task Details (On-Demand)
+- Deployment domain and routing: `docs/tasks/task-dep-01-domain-and-routing.md`
+- Square secrets setup: `docs/tasks/task-dep-02-square-secrets.md`
+- Product catalog population: `docs/tasks/task-dep-03-product-catalog.md`
+- Web3Forms key setup: `docs/tasks/task-dep-04-contact-form-key.md`
+- Playwright execution checklist: `docs/tasks/task-dep-05-testing.md`

@@ -1,0 +1,24 @@
+# Tier 3: always hidden (binaries, caches, logs, credentials)
+node_modules/
+*.log
+*.db
+.env
+.env.*
+dist/
+build/
+test-results/
+playwright-report/
+.wrangler/
+
+# Tier 2: default hidden, unhide surgically when needed
+worker/
+tests/
+docs/tasks/
+assets/images/
+
+# Tier 1: always visible core
+!AI_CODEBASE_METHODOLOGY.md
+!ARCHITECTURE_PLAYBOOK.md
+!TODO.md
+!docs/llms.txt
+!index.html

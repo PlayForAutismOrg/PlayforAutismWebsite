@@ -1,0 +1,6 @@
+# Copy to .dev.vars in this folder for local Worker testing (never commit .dev.vars).
+# Official guidance: https://developers.cloudflare.com/workers/configuration/secrets/
+
+SQUARE_ACCESS_TOKEN=
+SQUARE_LOCATION_ID=
+

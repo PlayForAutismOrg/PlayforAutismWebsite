@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Play for Autism | Store</title>
+    <meta name="description" content="Shop Play for Autism products. All payment is securely processed on Square hosted checkout pages.">
+    <meta name="keywords" content="autism charity store, support products, fundraising">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Play for Autism Store">
+    <meta property="og:description" content="Every purchase supports inclusive programs for autistic children and their families.">
+    <meta property="og:image" content="assets/images/og-store.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/store.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Play for Autism Store">
+    <meta name="twitter:description" content="Every purchase supports inclusive programs for autistic children and their families.">
+    <meta name="twitter:image" content="assets/images/og-store.png">
+    <meta name="theme-color" content="#0d1b2a">
+    <link rel="canonical" href="https://yourdomain.com/store.html">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header" data-site-header>
+      <div class="container nav-shell">
+        <a class="brand" href="index.html"><img class="brand-mark" src="assets/images/pfa-logo.png" alt="Play for Autism logo" width="72" height="72"><span>Play for Autism</span></a>
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mainNav">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="mainNav" class="site-nav" aria-label="Main">
+          <a href="index.html">Home</a><a href="about.html">About</a><a href="store.html">Store</a><a href="events.html">Events</a><a href="donate.html">Donate</a><a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <section class="hero">
+        <div class="container">
+          <div class="section-head reveal">
+            <h1>Store</h1>
+            <p>
+              Add products to your cart, then check out on Square. We do not collect
+              payment details on this website.
+            </p>
+          </div>
+          <div class="notice reveal">
+            Secure checkout notice: Clicking checkout redirects you to Square hosted payment pages.
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container split">
+          <div>
+            <div id="productGrid" class="store-grid reveal" aria-live="polite"></div>
+          </div>
+
+          <aside class="cart-shell reveal" aria-labelledby="cartTitle">
+            <h2 id="cartTitle">Your Cart</h2>
+            <ul id="cartList" class="cart-list"></ul>
+            <p id="cartEmptyMessage" class="muted">Your cart is empty.</p>
+            <div class="cart-total">
+              <span>Total</span>
+              <span id="cartTotal">$0.00</span>
+            </div>
+            <button id="checkoutButton" class="btn ripple" type="button">Checkout on Square</button>
+            <p id="cartNotice" class="meta" aria-live="polite"></p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>Need help with an order? <a href="contact.html">Contact support</a>.</p>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/store.js" defer></script>
+  </body>
+</html>

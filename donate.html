@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Play for Autism | Donate</title>
+    <meta name="description" content="Donate to Play for Autism. All payments are securely completed on Square-hosted checkout pages.">
+    <meta name="keywords" content="donate autism charity, support families, autism programs">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Donate to Play for Autism">
+    <meta property="og:description" content="Your donation supports inclusive programs for children and caregivers.">
+    <meta property="og:image" content="assets/images/og-donate.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/donate.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Donate to Play for Autism">
+    <meta name="twitter:description" content="Your donation supports inclusive programs for children and caregivers.">
+    <meta name="twitter:image" content="assets/images/og-donate.png">
+    <meta name="theme-color" content="#0d1b2a">
+    <link rel="canonical" href="https://yourdomain.com/donate.html">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header" data-site-header>
+      <div class="container nav-shell">
+        <a class="brand" href="index.html"><img class="brand-mark" src="assets/images/pfa-logo.png" alt="Play for Autism logo" width="72" height="72"><span>Play for Autism</span></a>
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mainNav">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="mainNav" class="site-nav" aria-label="Main">
+          <a href="index.html">Home</a><a href="about.html">About</a><a href="store.html">Store</a><a href="events.html">Events</a><a href="donate.html">Donate</a><a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <section class="hero donate-hero">
+        <div class="container">
+          <div class="reveal">
+            <h1>Every dollar builds a<br>more inclusive community.</h1>
+            <p>
+              100% of proceeds go directly to supporting children and families
+              on the autism spectrum through events, resource kits, and inclusive programming.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="donate-section">
+        <div class="container">
+          <div class="donate-flow reveal">
+            <h2>Choose your impact</h2>
+            <div id="donationOptions" class="donation-grid" role="radiogroup" aria-label="Donation amount">
+              <button class="donation-card active" data-donation-amount="25" type="button">
+                <span class="donation-amount">$25</span>
+                <span class="donation-impact">Sensory tools for one family</span>
+              </button>
+              <button class="donation-card" data-donation-amount="50" type="button">
+                <span class="donation-amount">$50</span>
+                <span class="donation-impact">Volunteer training materials</span>
+              </button>
+              <button class="donation-card" data-donation-amount="100" type="button">
+                <span class="donation-amount">$100</span>
+                <span class="donation-impact">Full activity station at a community event</span>
+              </button>
+              <button class="donation-card" data-donation-amount="250" type="button">
+                <span class="donation-amount">$250</span>
+                <span class="donation-impact">Inclusive event scholarship for a child</span>
+              </button>
+              <button class="donation-card" data-donation-amount="custom" type="button">
+                <span class="donation-amount">Other</span>
+                <span class="donation-impact">Choose your own amount</span>
+              </button>
+            </div>
+
+            <div id="customAmountRow" class="custom-amount-row" hidden>
+              <label for="customAmount">Enter amount</label>
+              <div class="custom-amount-input">
+                <span class="currency-prefix">$</span>
+                <input id="customAmount" type="number" min="1" step="1" placeholder="0">
+              </div>
+            </div>
+
+            <div class="donate-note-row">
+              <label for="donorNote">Dedicate your gift <span class="label-optional">(optional)</span></label>
+              <input id="donorNote" name="donorNote" type="text" placeholder="In honor of...">
+            </div>
+
+            <button id="donateCheckoutButton" class="btn donate-cta ripple" type="button">
+              Continue to secure checkout
+            </button>
+            <p id="donationNotice" class="meta" aria-live="polite"></p>
+
+            <div class="donate-trust">
+              <p>Payments are processed securely by Square. We never see or store your card details.</p>
+              <p>Play for Autism Foundation is a registered nonprofit. Your donation may be tax-deductible.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="donate-closing">
+        <div class="container">
+          <div class="reveal">
+            <h2>Where your money goes</h2>
+            <div class="impact-row">
+              <div class="impact-item">
+                <strong>100%</strong>
+                <span>of proceeds fund family programs</span>
+              </div>
+              <div class="impact-item">
+                <strong>150+</strong>
+                <span>golfers participated in our events</span>
+              </div>
+              <div class="impact-item">
+                <strong>2</strong>
+                <span>annual community golf outings held</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>Play for Autism Foundation &copy; 2026 &middot; Chesterfield, MI &middot; <a href="mailto:swingforautismfoundation@gmail.com">swingforautismfoundation@gmail.com</a></p>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/store.js" defer></script>
+  </body>
+</html>

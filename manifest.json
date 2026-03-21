@@ -1,0 +1,22 @@
+{
+  "name": "Play for Autism Foundation",
+  "short_name": "PFA",
+  "description": "Raising funds for families affected by autism through golf outings, merchandise, and community events in Southeast Michigan.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1b2a",
+  "theme_color": "#0d1b2a",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "assets/images/pfa-logo.png",
+      "sizes": "2000x2000",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
