@@ -84,13 +84,16 @@
   }
 
   const categoryLabels = {
+    all: "All",
     events: "Events & Golf",
     golf: "Golf Packages",
     merch: "Merchandise",
     raffle: "Raffle & 50/50"
   };
 
-  const categoryOrder = ["events", "golf", "merch", "raffle"];
+  const categoryOrder = ["all", "events", "golf", "merch", "raffle"];
+
+  let activeCategory = "all";
 
   async function fetchInventory() {
     const ids = products.map((p) => p.variationId).filter(Boolean);
@@ -123,42 +126,76 @@
     return { tracked: true, qty, label: "In Stock", status: "in" };
   }
 
+  function renderCategoryTabs() {
+    const tabBar = document.getElementById("categoryTabs");
+    if (!tabBar) return;
+
+    tabBar.innerHTML = categoryOrder
+      .map((cat) => {
+        const isActive = cat === activeCategory;
+        const count = cat === "all" ? products.length : products.filter((p) => p.category === cat).length;
+        return `<button class="store-tab${isActive ? " active" : ""}" type="button" role="tab"
+          aria-selected="${isActive}" data-category="${cat}">
+          ${categoryLabels[cat]}<span class="tab-count">${count}</span>
+        </button>`;
+      })
+      .join("");
+
+    tabBar.querySelectorAll(".store-tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cat = btn.getAttribute("data-category");
+        if (cat === activeCategory) return;
+        activeCategory = cat;
+        history.replaceState(null, "", cat === "all" ? location.pathname : `#${cat}`);
+        renderCategoryTabs();
+        renderProducts();
+      });
+    });
+  }
+
+  function buildProductCard(product) {
+    const stock = getStockInfo(product);
+    const isOut = stock.status === "out";
+    const btnLabel = isOut ? "Pre-order" : "Add to Cart";
+    const btnClass = isOut ? "btn ripple btn-preorder" : "btn ripple";
+    return `
+      <article class="card product-card${isOut ? " product-out-of-stock" : ""}">
+        <span class="stock-badge stock-${stock.status}">${stock.label}</span>
+        <h4>${product.name}</h4>
+        <p class="meta">${product.description}</p>
+        <div class="product-card-footer">
+          <span class="price">${formatMoney(product.price)}</span>
+          <button class="${btnClass}" type="button" data-add-product="${product.id}">${btnLabel}</button>
+        </div>
+      </article>
+    `;
+  }
+
   function renderProducts() {
     const grid = document.getElementById("productGrid");
-    if (!grid) {
-      return;
-    }
+    if (!grid) return;
+
+    const filtered = activeCategory === "all"
+      ? products
+      : products.filter((p) => p.category === activeCategory);
 
     let html = "";
-    categoryOrder.forEach((cat) => {
-      const items = products.filter((p) => p.category === cat);
-      if (!items.length) return;
-      html += `<h3 class="store-category-heading">${categoryLabels[cat]}</h3>`;
-      html += `<div class="store-grid">`;
-      html += items
-        .map((product) => {
-          const stock = getStockInfo(product);
-          const isOut = stock.status === "out";
-          const badgeClass = `stock-badge stock-${stock.status}`;
-          const btnLabel = isOut ? "Pre-order" : "Add to Cart";
-          const btnClass = isOut ? "btn ripple btn-preorder" : "btn ripple";
-          return `
-            <article class="card product-card${isOut ? " product-out-of-stock" : ""}">
-              <span class="${badgeClass}">${stock.label}</span>
-              <h4>${product.name}</h4>
-              <p class="meta">${product.description}</p>
-              <div class="price">${formatMoney(product.price)}</div>
-              <button class="${btnClass}" type="button" data-add-product="${product.id}">
-                ${btnLabel}
-              </button>
-            </article>
-          `;
-        })
-        .join("");
-      html += `</div>`;
-    });
+    if (activeCategory === "all") {
+      const realCats = ["events", "golf", "merch", "raffle"];
+      realCats.forEach((cat) => {
+        const items = filtered.filter((p) => p.category === cat);
+        if (!items.length) return;
+        html += `<h3 class="store-category-heading">${categoryLabels[cat]}</h3>`;
+        html += `<div class="store-grid">${items.map(buildProductCard).join("")}</div>`;
+      });
+    } else {
+      html += `<div class="store-grid">${filtered.map(buildProductCard).join("")}</div>`;
+    }
 
+    grid.classList.remove("grid-fade-in");
+    void grid.offsetWidth;
     grid.innerHTML = html;
+    grid.classList.add("grid-fade-in");
 
     grid.querySelectorAll("[data-add-product]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -331,11 +368,25 @@
   }
 
   async function init() {
+    const hash = location.hash.replace("#", "");
+    if (hash && categoryOrder.includes(hash)) {
+      activeCategory = hash;
+    }
     await fetchInventory();
+    renderCategoryTabs();
     renderProducts();
     renderCart();
     setupStoreCheckout();
     setupDonations();
+
+    window.addEventListener("hashchange", () => {
+      const h = location.hash.replace("#", "");
+      if (h && categoryOrder.includes(h) && h !== activeCategory) {
+        activeCategory = h;
+        renderCategoryTabs();
+        renderProducts();
+      }
+    });
   }
 
   init();
