@@ -13,10 +13,16 @@
       "type": "image/svg+xml"
     },
     {
-      "src": "assets/images/pfa-logo.png",
-      "sizes": "2000x2000",
+      "src": "assets/images/pfa-icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "assets/images/pfa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

@@ -9,20 +9,35 @@
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Donate to Play for Autism">
     <meta property="og:description" content="Your donation supports inclusive programs for children and caregivers.">
-    <meta property="og:image" content="https://playforautism.org/assets/images/og-donate.png">
+    <meta property="og:image" content="https://playforautism.org/assets/images/og-donate.jpg">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://playforautism.org/donate.html">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Donate to Play for Autism">
     <meta name="twitter:description" content="Your donation supports inclusive programs for children and caregivers.">
-    <meta name="twitter:image" content="https://playforautism.org/assets/images/og-donate.png">
+    <meta name="twitter:image" content="https://playforautism.org/assets/images/og-donate.jpg">
     <meta name="theme-color" content="#0d1b2a">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.playforautism.org; form-action 'self' https://api.web3forms.com; frame-ancestors 'none';">
     <link rel="canonical" href="https://playforautism.org/donate.html">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preload" href="assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "DonateAction",
+      "name": "Donate to Play for Autism",
+      "description": "Make a tax-deductible donation to support inclusive programs for children and families affected by autism.",
+      "url": "https://playforautism.org/donate.html",
+      "recipient": {
+        "@type": "NGO",
+        "name": "Play for Autism Foundation",
+        "url": "https://playforautism.org"
+      }
+    }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -134,7 +149,7 @@
         <div class="footer-grid">
           <div class="footer-col">
             <div class="footer-brand">
-              <img src="assets/images/pfa-logo.png" alt="Play for Autism" width="40" height="40">
+              <img src="assets/images/pfa-logo.png" alt="Play for Autism" width="40" height="40" loading="lazy">
               <span>Play for Autism</span>
             </div>
             <p>Bringing communities together through golf outings, fundraising events, and hands-on support for families affected by autism.</p>

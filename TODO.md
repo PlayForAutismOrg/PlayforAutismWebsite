@@ -1,6 +1,6 @@
 # TODO - Play for Autism Website
 
-**Updated:** 2026-03-21  
+**Updated:** 2026-03-15  
 **Agent:** Update this file when tasks are completed.  
 **Details:** See `docs/tasks/` for deep task notes.
 
@@ -13,18 +13,11 @@ The sequence prioritizes foundation and security first (visibility, structure, p
 
 ## Current Phase
 
-Production-ready. Square catalog integration live with real-time inventory. Security audit completed and all critical/medium issues resolved. Remaining items are low-priority optimizations.
+**Complete.** All features and optimizations shipped. No remaining tasks.
 
 ## Active Tasks
 
-| ID | Task | Priority | Status | Notes |
-|----|------|----------|--------|-------|
-| DEP-04 | Add real Web3Forms key on contact page | MEDIUM | Ready | Replace `REPLACE_WITH_WEB3FORMS_KEY` in `contact.html` |
-| OPT-01 | Compress large images (>500KB) | LOW | Open | `sfa-2024-flyer.png` (~1.2MB), `sfa-2024-sponsorship.png` (~1.2MB), `golf-classic-example.jpg` (~1.1MB), `og-events.png` (~1.2MB), `weber-security-group.jpeg` (~828KB), `pfa-logo.png` (~429KB) |
-| OPT-02 | Add PWA icons 192x192 and 512x512 | LOW | Open | Current manifest only has SVG and 2000x2000 PNG |
-| OPT-03 | Add JSON-LD structured data to inner pages | LOW | Open | about, contact, events, store, donate pages lack page-specific structured data |
-| OPT-04 | Add `loading="lazy"` to below-fold images | LOW | Open | Footer logos, event flyer on events page |
-| OPT-05 | Add font preload link for Lexend | LOW | Open | `<link rel="preload" href="assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>` |
+None — all tasks completed.
 
 ## Completed Milestones
 
@@ -41,8 +34,11 @@ Production-ready. Square catalog integration live with real-time inventory. Secu
 - Store wired to Square Catalog API with real variation IDs for price-enforced checkout.
 - Real-time inventory from Square Inventory API with stock badges and pre-order flow.
 - Store UX overhaul: tabbed category filter, compact cards, deep linking.
+- Store product family grouping: variant chip selectors (sizes, quantities, types).
+- Mobile cart ribbon: sticky bottom bar on phones showing item count and total.
+- Contact form live via Web3Forms.
 - Service worker fixed: `skipWaiting` + `clients.claim` + network-first strategy.
-- **Security audit completed (2026-03-21):**
+- **Security audit completed:**
   - Self-hosted Google Fonts (CORS fix).
   - Content-Security-Policy + referrer policy on all 8 pages.
   - Worker CORS: strict origin validation, no localhost bypass.
@@ -50,7 +46,12 @@ Production-ready. Square catalog integration live with real-time inventory. Secu
   - Worker: sanitized error messages, no internal details leaked.
   - Contact form: honeypot field added.
   - Heading hierarchy fixed (footer h4 -> h3).
-  - CSS `--muted` variable fixed to `--text-muted`.
+- **Optimization pass completed:**
+  - Compressed all oversized images (total savings ~7MB).
+  - PWA icons added (192x192 and 512x512).
+  - JSON-LD structured data on all pages.
+  - `loading="lazy"` on all below-fold images.
+  - Font preload link for Lexend on all pages.
 
 ## Quick Reference
 
