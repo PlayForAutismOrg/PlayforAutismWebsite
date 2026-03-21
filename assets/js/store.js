@@ -10,37 +10,100 @@
 
   let inventoryCounts = {};
 
-  const products = [
-    { id: "sfa-golf-outing", name: "Swing For Autism Golf Outing", description: "Entry to the annual Swing for Autism golf outing event.", price: 125.00, category: "events", variationId: "YY74RYJEM4YKD6SSZVS4LIPQ" },
-    { id: "golf-1", name: "Golf — 1 Golfer", description: "Single golfer registration.", price: 120.00, category: "golf", variationId: "Q3FZTGOVKZ2ZUSODMPGVPHJA" },
-    { id: "golf-2", name: "Golf — 2 Golfers", description: "Two golfer registration.", price: 240.00, category: "golf", variationId: "Z3TK62DAIAKNL4M4OQCRRY6A" },
-    { id: "golf-3", name: "Golf — 3 Golfers", description: "Three golfer registration.", price: 360.00, category: "golf", variationId: "45NYPEKO4YJOF6N7IMAX3E6O" },
-    { id: "golf-4", name: "Golf — 4 Golfers", description: "Four golfer registration (full team).", price: 480.00, category: "golf", variationId: "RPY4DS6DI37VPWNHDZCJBLL3" },
-    { id: "polo-s", name: "Polo — Small", description: "PFA branded polo shirt, size Small.", price: 40.00, category: "merch", variationId: "D4EP5YYGLCAULCZCQNXMWZIS" },
-    { id: "polo-m", name: "Polo — Medium", description: "PFA branded polo shirt, size Medium.", price: 40.00, category: "merch", variationId: "RU4F3D6QRLPME52I7UKHJ5JZ" },
-    { id: "polo-l", name: "Polo — Large", description: "PFA branded polo shirt, size Large.", price: 40.00, category: "merch", variationId: "XBB5GPV2N4LYICXUAVL45GLV" },
-    { id: "polo-xl", name: "Polo — XL", description: "PFA branded polo shirt, size XL.", price: 40.00, category: "merch", variationId: "O5GHFFAQ5WYJFBLWYTJ3STMU" },
-    { id: "polo-2xl", name: "Polo — 2XL", description: "PFA branded polo shirt, size 2XL.", price: 40.00, category: "merch", variationId: "DDMGH6TR2OGWLTKE4QOG22UY" },
-    { id: "hat", name: "Hat", description: "PFA branded hat.", price: 20.00, category: "merch", variationId: "YG3KXSCSI4DZKYACHEPD4H4P" },
-    { id: "golf-balls", name: "Golf Balls", description: "Sleeve of golf balls.", price: 10.00, category: "merch", variationId: "ICR55BOSHY3T43QGP7FKNQU3" },
-    { id: "mini-games-individual", name: "Mini Games — Individual", description: "Individual entry for mini games at the event.", price: 10.00, category: "events", variationId: "B55X26M2VR2J2I3RJX5Y6BVH" },
-    { id: "mini-games-team", name: "Mini Games — Team", description: "Team entry for mini games at the event.", price: 40.00, category: "events", variationId: "WCPXW2K4JG7JGTZ2VR7ML7QG" },
-    { id: "raffle-1", name: "Raffle — 1 Ticket", description: "One raffle ticket for prize drawings.", price: 10.00, category: "raffle", variationId: "B4SY6ZWXFCYEDGJOZSZXHDEX" },
-    { id: "raffle-6", name: "Raffle — 6 Tickets", description: "Six raffle tickets for prize drawings.", price: 50.00, category: "raffle", variationId: "UP6NU2X76TVH53IBWX52ZHS6" },
-    { id: "raffle-15", name: "Raffle — 15 Tickets", description: "Fifteen raffle tickets for prize drawings.", price: 100.00, category: "raffle", variationId: "Z2LPVDSHRSCNBPF42SWPJKUH" },
-    { id: "5050-1", name: "50/50 — 1 Ticket", description: "One 50/50 raffle ticket.", price: 1.00, category: "raffle", variationId: "QE7ETOCXQS2MDWEYOCXIKZVF" },
-    { id: "5050-5", name: "50/50 — 5 Tickets", description: "Five 50/50 raffle tickets.", price: 5.00, category: "raffle", variationId: "DRQMRVOADU77WT23TP2UWSCQ" },
-    { id: "5050-10", name: "50/50 — 10 Tickets", description: "Ten 50/50 raffle tickets.", price: 10.00, category: "raffle", variationId: "A6SVJSBERTSX7VRE4SX72QJ5" },
-    { id: "5050-20", name: "50/50 — 20 Tickets", description: "Twenty 50/50 raffle tickets.", price: 20.00, category: "raffle", variationId: "AY2QICMI6IGVJHMDDH7WPSTI" },
-    { id: "5050-50", name: "50/50 — 50 Tickets", description: "Fifty 50/50 raffle tickets.", price: 50.00, category: "raffle", variationId: "QEFCSV4YNJWIFCODBGZOH6QR" },
-    { id: "5050-100", name: "50/50 — 100 Tickets", description: "One hundred 50/50 raffle tickets.", price: 100.00, category: "raffle", variationId: "KRDAMWT3M537JWVSCGVRC7XT" }
+  const productFamilies = [
+    {
+      familyId: "sfa-golf-outing", name: "Swing For Autism Golf Outing",
+      description: "Entry to the annual Swing for Autism golf outing event.",
+      category: "events", variantLabel: null,
+      variants: [
+        { id: "sfa-golf-outing", label: null, price: 125.00, variationId: "YY74RYJEM4YKD6SSZVS4LIPQ" }
+      ]
+    },
+    {
+      familyId: "mini-games", name: "Mini Games",
+      description: "Entry for mini games at the event.",
+      category: "events", variantLabel: "Type",
+      variants: [
+        { id: "mini-games-individual", label: "Individual", price: 10.00, variationId: "B55X26M2VR2J2I3RJX5Y6BVH" },
+        { id: "mini-games-team", label: "Team", price: 40.00, variationId: "WCPXW2K4JG7JGTZ2VR7ML7QG" }
+      ]
+    },
+    {
+      familyId: "golf", name: "Golf Registration",
+      description: "Register your group for the golf outing.",
+      category: "golf", variantLabel: "Players",
+      variants: [
+        { id: "golf-1", label: "1", price: 120.00, variationId: "Q3FZTGOVKZ2ZUSODMPGVPHJA" },
+        { id: "golf-2", label: "2", price: 240.00, variationId: "Z3TK62DAIAKNL4M4OQCRRY6A" },
+        { id: "golf-3", label: "3", price: 360.00, variationId: "45NYPEKO4YJOF6N7IMAX3E6O" },
+        { id: "golf-4", label: "4", price: 480.00, variationId: "RPY4DS6DI37VPWNHDZCJBLL3" }
+      ]
+    },
+    {
+      familyId: "polo", name: "Polo",
+      description: "PFA branded polo shirt.",
+      category: "merch", variantLabel: "Size",
+      variants: [
+        { id: "polo-s", label: "S", price: 40.00, variationId: "D4EP5YYGLCAULCZCQNXMWZIS" },
+        { id: "polo-m", label: "M", price: 40.00, variationId: "RU4F3D6QRLPME52I7UKHJ5JZ" },
+        { id: "polo-l", label: "L", price: 40.00, variationId: "XBB5GPV2N4LYICXUAVL45GLV" },
+        { id: "polo-xl", label: "XL", price: 40.00, variationId: "O5GHFFAQ5WYJFBLWYTJ3STMU" },
+        { id: "polo-2xl", label: "2XL", price: 40.00, variationId: "DDMGH6TR2OGWLTKE4QOG22UY" }
+      ]
+    },
+    {
+      familyId: "hat", name: "Hat",
+      description: "PFA branded hat.",
+      category: "merch", variantLabel: null,
+      variants: [
+        { id: "hat", label: null, price: 20.00, variationId: "YG3KXSCSI4DZKYACHEPD4H4P" }
+      ]
+    },
+    {
+      familyId: "golf-balls", name: "Golf Balls",
+      description: "Sleeve of golf balls.",
+      category: "merch", variantLabel: null,
+      variants: [
+        { id: "golf-balls", label: null, price: 10.00, variationId: "ICR55BOSHY3T43QGP7FKNQU3" }
+      ]
+    },
+    {
+      familyId: "raffle", name: "Raffle Tickets",
+      description: "Raffle tickets for prize drawings.",
+      category: "raffle", variantLabel: "Tickets",
+      variants: [
+        { id: "raffle-1", label: "1", price: 10.00, variationId: "B4SY6ZWXFCYEDGJOZSZXHDEX" },
+        { id: "raffle-6", label: "6", price: 50.00, variationId: "UP6NU2X76TVH53IBWX52ZHS6" },
+        { id: "raffle-15", label: "15", price: 100.00, variationId: "Z2LPVDSHRSCNBPF42SWPJKUH" }
+      ]
+    },
+    {
+      familyId: "5050", name: "50/50",
+      description: "50/50 raffle — half the pot goes to the winner.",
+      category: "raffle", variantLabel: "Tickets",
+      variants: [
+        { id: "5050-1", label: "1", price: 1.00, variationId: "QE7ETOCXQS2MDWEYOCXIKZVF" },
+        { id: "5050-5", label: "5", price: 5.00, variationId: "DRQMRVOADU77WT23TP2UWSCQ" },
+        { id: "5050-10", label: "10", price: 10.00, variationId: "A6SVJSBERTSX7VRE4SX72QJ5" },
+        { id: "5050-20", label: "20", price: 20.00, variationId: "AY2QICMI6IGVJHMDDH7WPSTI" },
+        { id: "5050-50", label: "50", price: 50.00, variationId: "QEFCSV4YNJWIFCODBGZOH6QR" },
+        { id: "5050-100", label: "100", price: 100.00, variationId: "KRDAMWT3M537JWVSCGVRC7XT" }
+      ]
+    }
   ];
 
+  const allVariants = productFamilies.flatMap((f) => f.variants);
+
+  function findVariant(id) {
+    return allVariants.find((v) => v.id === id) || null;
+  }
+
+  function findFamily(variantId) {
+    return productFamilies.find((f) => f.variants.some((v) => v.id === variantId)) || null;
+  }
+
   function formatMoney(amount) {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD"
-    }).format(amount);
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount);
   }
 
   function readCart() {
@@ -57,14 +120,13 @@
     localStorage.setItem(CART_KEY, JSON.stringify(items));
   }
 
-  function addToCart(productId) {
+  function addToCart(variantId) {
     const cart = readCart();
-    const existing = cart.find((item) => item.id === productId);
-
+    const existing = cart.find((item) => item.id === variantId);
     if (existing) {
       existing.quantity += 1;
     } else {
-      cart.push({ id: productId, quantity: 1 });
+      cart.push({ id: variantId, quantity: 1 });
     }
     writeCart(cart);
     renderCart();
@@ -74,11 +136,13 @@
     const cart = readCart();
     return cart
       .map((cartItem) => {
-        const product = products.find((p) => p.id === cartItem.id);
-        if (!product) {
-          return null;
-        }
-        return { ...product, quantity: cartItem.quantity };
+        const variant = findVariant(cartItem.id);
+        if (!variant) return null;
+        const family = findFamily(cartItem.id);
+        const displayName = family && variant.label
+          ? `${family.name} — ${variant.label}`
+          : (family ? family.name : variant.id);
+        return { ...variant, name: displayName, quantity: cartItem.quantity };
       })
       .filter(Boolean);
   }
@@ -92,11 +156,10 @@
   };
 
   const categoryOrder = ["all", "events", "golf", "merch", "raffle"];
-
   let activeCategory = "all";
 
   async function fetchInventory() {
-    const ids = products.map((p) => p.variationId).filter(Boolean);
+    const ids = allVariants.map((v) => v.variationId).filter(Boolean);
     try {
       const res = await fetch(INVENTORY_ENDPOINT, {
         method: "POST",
@@ -107,22 +170,16 @@
       const data = await res.json();
       inventoryCounts = data.counts || {};
     } catch {
-      // Inventory unavailable — render all as available
+      /* inventory unavailable */
     }
   }
 
-  function getStockInfo(product) {
-    const inv = inventoryCounts[product.variationId];
-    if (!inv) {
-      return { tracked: false, qty: null, label: "Available", status: "available" };
-    }
+  function getStockInfo(variant) {
+    const inv = inventoryCounts[variant.variationId];
+    if (!inv) return { tracked: false, qty: null, label: "Available", status: "available" };
     const qty = inv.quantity;
-    if (qty <= 0) {
-      return { tracked: true, qty, label: "Out of Stock", status: "out" };
-    }
-    if (qty <= 5) {
-      return { tracked: true, qty, label: `Only ${qty} left`, status: "low" };
-    }
+    if (qty <= 0) return { tracked: true, qty, label: "Out of Stock", status: "out" };
+    if (qty <= 5) return { tracked: true, qty, label: `Only ${qty} left`, status: "low" };
     return { tracked: true, qty, label: "In Stock", status: "in" };
   }
 
@@ -133,7 +190,9 @@
     tabBar.innerHTML = categoryOrder
       .map((cat) => {
         const isActive = cat === activeCategory;
-        const count = cat === "all" ? products.length : products.filter((p) => p.category === cat).length;
+        const count = cat === "all"
+          ? productFamilies.length
+          : productFamilies.filter((f) => f.category === cat).length;
         return `<button class="store-tab${isActive ? " active" : ""}" type="button" role="tab"
           aria-selected="${isActive}" data-category="${cat}">
           ${categoryLabels[cat]}<span class="tab-count">${count}</span>
@@ -153,22 +212,87 @@
     });
   }
 
-  function buildProductCard(product) {
-    const stock = getStockInfo(product);
+  function buildFamilyCard(family) {
+    const hasVariants = family.variants.length > 1;
+    const defaultVariant = family.variants[0];
+    const stock = getStockInfo(defaultVariant);
+    const fid = family.familyId;
+
+    let variantHtml = "";
+    if (hasVariants) {
+      const chips = family.variants.map((v, i) => {
+        const vStock = getStockInfo(v);
+        const outClass = vStock.status === "out" ? " variant-chip-out" : "";
+        return `<button type="button" class="variant-chip${i === 0 ? " active" : ""}${outClass}"
+          data-family="${fid}" data-variant-id="${v.id}" data-price="${v.price}"
+          data-variation-id="${v.variationId}"
+          ${vStock.status === "out" ? 'data-out="true"' : ""}
+          aria-label="${family.variantLabel} ${v.label}${vStock.status === "out" ? " (out of stock)" : ""}">${v.label}</button>`;
+      }).join("");
+
+      variantHtml = `
+        <div class="variant-selector">
+          <span class="variant-label">${family.variantLabel}</span>
+          <div class="variant-chips">${chips}</div>
+        </div>`;
+    }
+
     const isOut = stock.status === "out";
     const btnLabel = isOut ? "Pre-order" : "Add to Cart";
     const btnClass = isOut ? "btn ripple btn-preorder" : "btn ripple";
+
     return `
-      <article class="card product-card${isOut ? " product-out-of-stock" : ""}">
-        <span class="stock-badge stock-${stock.status}">${stock.label}</span>
-        <h4>${product.name}</h4>
-        <p class="meta">${product.description}</p>
+      <article class="card product-card${isOut && !hasVariants ? " product-out-of-stock" : ""}" data-family="${fid}">
+        <span class="stock-badge stock-${stock.status}" data-stock-badge="${fid}">${stock.label}</span>
+        <h4>${family.name}</h4>
+        <p class="meta">${family.description}</p>
+        ${variantHtml}
         <div class="product-card-footer">
-          <span class="price">${formatMoney(product.price)}</span>
-          <button class="${btnClass}" type="button" data-add-product="${product.id}">${btnLabel}</button>
+          <span class="price" data-price-display="${fid}">${formatMoney(defaultVariant.price)}</span>
+          <button class="${btnClass}" type="button" data-add-family="${fid}" data-active-variant="${defaultVariant.id}">${btnLabel}</button>
         </div>
       </article>
     `;
+  }
+
+  function wireVariantChips(container) {
+    container.querySelectorAll(".variant-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const fid = chip.getAttribute("data-family");
+        const card = container.querySelector(`[data-family="${fid}"]`);
+        if (!card) return;
+
+        card.querySelectorAll(`.variant-chip[data-family="${fid}"]`).forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+
+        const price = parseFloat(chip.getAttribute("data-price"));
+        const variantId = chip.getAttribute("data-variant-id");
+        const variationId = chip.getAttribute("data-variation-id");
+        const isOut = chip.hasAttribute("data-out");
+
+        const priceEl = card.querySelector(`[data-price-display="${fid}"]`);
+        if (priceEl) priceEl.textContent = formatMoney(price);
+
+        const badge = card.querySelector(`[data-stock-badge="${fid}"]`);
+        if (badge) {
+          const variant = allVariants.find((v) => v.variationId === variationId);
+          if (variant) {
+            const s = getStockInfo(variant);
+            badge.textContent = s.label;
+            badge.className = `stock-badge stock-${s.status}`;
+          }
+        }
+
+        const btn = card.querySelector(`[data-add-family="${fid}"]`);
+        if (btn) {
+          btn.setAttribute("data-active-variant", variantId);
+          btn.textContent = isOut ? "Pre-order" : "Add to Cart";
+          btn.className = isOut ? "btn ripple btn-preorder" : "btn ripple";
+        }
+
+        card.classList.toggle("product-out-of-stock", isOut);
+      });
+    });
   }
 
   function renderProducts() {
@@ -176,20 +300,20 @@
     if (!grid) return;
 
     const filtered = activeCategory === "all"
-      ? products
-      : products.filter((p) => p.category === activeCategory);
+      ? productFamilies
+      : productFamilies.filter((f) => f.category === activeCategory);
 
     let html = "";
     if (activeCategory === "all") {
       const realCats = ["events", "golf", "merch", "raffle"];
       realCats.forEach((cat) => {
-        const items = filtered.filter((p) => p.category === cat);
+        const items = filtered.filter((f) => f.category === cat);
         if (!items.length) return;
         html += `<h3 class="store-category-heading">${categoryLabels[cat]}</h3>`;
-        html += `<div class="store-grid">${items.map(buildProductCard).join("")}</div>`;
+        html += `<div class="store-grid">${items.map(buildFamilyCard).join("")}</div>`;
       });
     } else {
-      html += `<div class="store-grid">${filtered.map(buildProductCard).join("")}</div>`;
+      html += `<div class="store-grid">${filtered.map(buildFamilyCard).join("")}</div>`;
     }
 
     grid.classList.remove("grid-fade-in");
@@ -197,15 +321,18 @@
     grid.innerHTML = html;
     grid.classList.add("grid-fade-in");
 
-    grid.querySelectorAll("[data-add-product]").forEach((button) => {
+    wireVariantChips(grid);
+
+    grid.querySelectorAll("[data-add-family]").forEach((button) => {
       button.addEventListener("click", () => {
-        addToCart(button.getAttribute("data-add-product"));
+        const variantId = button.getAttribute("data-active-variant");
+        addToCart(variantId);
       });
     });
   }
 
-  function removeCartItem(productId) {
-    const cart = readCart().filter((item) => item.id !== productId);
+  function removeCartItem(variantId) {
+    const cart = readCart().filter((item) => item.id !== variantId);
     writeCart(cart);
     renderCart();
   }
@@ -215,9 +342,7 @@
     const cartTotal = document.getElementById("cartTotal");
     const cartEmptyMessage = document.getElementById("cartEmptyMessage");
     const checkoutButton = document.getElementById("checkoutButton");
-    if (!cartList || !cartTotal || !cartEmptyMessage || !checkoutButton) {
-      return;
-    }
+    if (!cartList || !cartTotal || !cartEmptyMessage || !checkoutButton) return;
 
     const detailedItems = cartToDetailedItems();
     const isEmpty = detailedItems.length === 0;
@@ -263,21 +388,17 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-
     if (!response.ok) {
       const text = await response.text();
       throw new Error(text || `Checkout request failed (${response.status})`);
     }
-
     return response.json();
   }
 
   function setupStoreCheckout() {
     const checkoutButton = document.getElementById("checkoutButton");
     const notice = document.getElementById("cartNotice");
-    if (!checkoutButton || !notice) {
-      return;
-    }
+    if (!checkoutButton || !notice) return;
 
     checkoutButton.addEventListener("click", async () => {
       const items = cartToDetailedItems().map((item) => ({
@@ -302,7 +423,7 @@
         });
         localStorage.removeItem(CART_KEY);
         window.location.href = data.checkoutUrl;
-      } catch (error) {
+      } catch {
         notice.textContent = "Unable to start checkout. Please try again.";
         checkoutButton.disabled = false;
       }
@@ -314,9 +435,7 @@
     const donateButton = document.getElementById("donateCheckoutButton");
     const notice = document.getElementById("donationNotice");
     const donorNote = document.getElementById("donorNote");
-    if (!optionsWrap || !donateButton || !notice) {
-      return;
-    }
+    if (!optionsWrap || !donateButton || !notice) return;
 
     let selectedAmount = 25;
     const customRow = document.getElementById("customAmountRow");
